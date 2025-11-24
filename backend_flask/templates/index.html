@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <!-- Painel de Controle -->
+    <div class="control-panel">
+        <div class="panel-section">
+            <h2>UPLOAD DE DADOS</h2>
+
+            <div class="upload-group">
+                <h3>Lotes de Vitória (.parquet)</h3>
+                <input type="file" id="lotes-file" accept=".parquet">
+                <button onclick="uploadLotes()" class="btn">ENVIAR LOTES</button>
+                <div id="lotes-status" class="status-message"></div>
+            </div>
+
+            <div class="upload-group">
+                <h3>Imóveis (.parquet)</h3>
+                <input type="file" id="imoveis-file" accept=".parquet">
+                <button onclick="uploadImoveis()" class="btn">ENVIAR IMÓVEIS</button>
+                <div id="imoveis-status" class="status-message"></div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h2>ESTATÍSTICAS</h2>
+            <div id="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">Lotes carregados:</span>
+                    <span class="stat-value" id="lotes-total">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Lotes com geometria:</span>
+                    <span class="stat-value" id="lotes-geometria">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Imóveis carregados:</span>
+                    <span class="stat-value" id="imoveis-total">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Imóveis com geometria:</span>
+                    <span class="stat-value" id="imoveis-geometria">0</span>
+                </div>
+            </div>
+            <button onclick="loadStats()" class="btn btn-secondary">ATUALIZAR</button>
+        </div>
+
+        <div class="panel-section">
+            <h2>VISUALIZAÇÃO</h2>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="show-lotes" checked onchange="toggleLotes()">
+                    Mostrar Lotes
+                </label>
+                <label>
+                    <input type="checkbox" id="show-imoveis" checked onchange="toggleImoveis()">
+                    Mostrar Imóveis
+                </label>
+            </div>
+            <div class="control-group">
+                <label for="bairro-filter">Filtrar por Bairro:</label>
+                <input type="text" id="bairro-filter" placeholder="Ex: Centro">
+            </div>
+            <div class="control-group">
+                <label for="limit-filter">Limite de resultados:</label>
+                <input type="number" id="limit-filter" value="1000" min="1" max="10000">
+            </div>
+            <button onclick="loadMapData()" class="btn">CARREGAR NO MAPA</button>
+        </div>
+
+        <div class="panel-section">
+            <h2>ANÁLISE ESPACIAL</h2>
+            <p class="instruction">Clique no mapa para analisar uma área</p>
+            <div class="control-group">
+                <label for="radius-input">Raio (metros):</label>
+                <input type="number" id="radius-input" value="1000" min="100" max="10000" step="100">
+            </div>
+            <div id="analysis-result" class="analysis-result"></div>
+        </div>
+    </div>
+
+    <!-- Mapa -->
+    <div class="map-container">
+        <div id="map"></div>
+        <div class="map-legend">
+            <div class="legend-item">
+                <span class="legend-marker" style="background: #000;"></span>
+                <span>Lotes</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-marker" style="background: #666;"></span>
+                <span>Imóveis</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-marker" style="background: rgba(0,0,0,0.2); border: 2px solid #000;"></span>
+                <span>Área de Análise</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

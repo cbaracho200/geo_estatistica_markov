@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from werkzeug.exceptions import BadRequest, InternalServerError
 import pandas as pd
@@ -19,9 +19,35 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 spatial_engine = SpatialEngine()
 
 
+# ========================================
+# ROTAS DE FRONTEND (TEMPLATES)
+# ========================================
+
 @app.route("/", methods=["GET"])
-def root():
-    """Health check endpoint"""
+def index():
+    """Página principal com mapa interativo"""
+    return render_template('index.html')
+
+
+@app.route("/stats-page", methods=["GET"])
+def stats_page():
+    """Página de estatísticas"""
+    return render_template('stats.html')
+
+
+@app.route("/api-docs", methods=["GET"])
+def api_docs():
+    """Página de documentação da API"""
+    return render_template('api_docs.html')
+
+
+# ========================================
+# ROTAS DE API (JSON)
+# ========================================
+
+@app.route("/api", methods=["GET"])
+def api_root():
+    """Health check endpoint da API"""
     return jsonify({
         "status": "online",
         "timestamp": datetime.now().isoformat(),

@@ -1,0 +1,494 @@
+/* ========================================
+   RESET E VARIÁVEIS
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --gray-light: #f5f5f5;
+    --gray-medium: #cccccc;
+    --gray-dark: #666666;
+    --border: 2px solid var(--black);
+    --spacing: 1rem;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+/* ========================================
+   TIPOGRAFIA E CORPO
+   ======================================== */
+body {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--black);
+    background-color: var(--white);
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: 18px;
+    margin-bottom: var(--spacing);
+}
+
+h2 {
+    font-size: 16px;
+    margin-bottom: calc(var(--spacing) * 0.75);
+}
+
+h3 {
+    font-size: 14px;
+    margin-bottom: calc(var(--spacing) * 0.5);
+}
+
+a {
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--black);
+    transition: all 0.2s;
+}
+
+a:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+header {
+    background-color: var(--black);
+    color: var(--white);
+    padding: var(--spacing);
+    border-bottom: var(--border);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+}
+
+header h1 a {
+    color: var(--white);
+    border-bottom: none;
+}
+
+header h1 a:hover {
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0.2rem 0.5rem;
+}
+
+header nav {
+    display: flex;
+    gap: var(--spacing);
+}
+
+header nav a {
+    color: var(--white);
+    border-bottom: 1px solid var(--white);
+    padding: 0.2rem 0;
+}
+
+header nav a:hover {
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0.2rem 0.5rem;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+footer {
+    background-color: var(--black);
+    color: var(--white);
+    padding: var(--spacing);
+    text-align: center;
+    border-top: var(--border);
+    margin-top: 2rem;
+}
+
+/* ========================================
+   CONTAINER E LAYOUT
+   ======================================== */
+.container {
+    padding: var(--spacing);
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: var(--spacing);
+    min-height: calc(100vh - 200px);
+}
+
+/* ========================================
+   PAINEL DE CONTROLE
+   ======================================== */
+.control-panel {
+    border: var(--border);
+    padding: var(--spacing);
+    background-color: var(--gray-light);
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+}
+
+.panel-section {
+    margin-bottom: calc(var(--spacing) * 1.5);
+    padding-bottom: calc(var(--spacing) * 1.5);
+    border-bottom: 1px solid var(--gray-medium);
+}
+
+.panel-section:last-child {
+    border-bottom: none;
+}
+
+/* ========================================
+   UPLOAD
+   ======================================== */
+.upload-group {
+    margin-bottom: var(--spacing);
+    padding: var(--spacing);
+    border: 1px solid var(--gray-medium);
+    background-color: var(--white);
+}
+
+.upload-group h3 {
+    margin-bottom: calc(var(--spacing) * 0.5);
+}
+
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: var(--border);
+    background-color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+input[type="file"]:hover {
+    background-color: var(--gray-light);
+}
+
+/* ========================================
+   BOTÕES
+   ======================================== */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--black);
+    color: var(--white);
+    border: var(--border);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.btn:active {
+    transform: translateY(2px);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.btn-secondary:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* ========================================
+   FORMULÁRIOS
+   ======================================== */
+.control-group {
+    margin-bottom: var(--spacing);
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: var(--border);
+    background-color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    background-color: var(--gray-light);
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* ========================================
+   ESTATÍSTICAS
+   ======================================== */
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+    border: 1px solid var(--gray-medium);
+    background-color: var(--white);
+}
+
+.stat-label {
+    font-weight: normal;
+}
+
+.stat-value {
+    font-weight: bold;
+}
+
+.status-message {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 12px;
+    border: 1px solid var(--gray-medium);
+    background-color: var(--white);
+    min-height: 2rem;
+}
+
+.status-message.success {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.status-message.error {
+    background-color: var(--white);
+    color: var(--black);
+    border-color: var(--black);
+    border-width: 2px;
+}
+
+/* ========================================
+   MAPA
+   ======================================== */
+.map-container {
+    position: relative;
+    border: var(--border);
+    background-color: var(--gray-light);
+}
+
+#map {
+    width: 100%;
+    height: calc(100vh - 150px);
+    background-color: var(--gray-light);
+}
+
+.map-legend {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--white);
+    border: var(--border);
+    padding: var(--spacing);
+    z-index: 1000;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+.legend-marker {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    border: 1px solid var(--black);
+}
+
+/* ========================================
+   ANÁLISE
+   ======================================== */
+.analysis-result {
+    margin-top: var(--spacing);
+    padding: var(--spacing);
+    border: var(--border);
+    background-color: var(--white);
+    min-height: 100px;
+    font-size: 12px;
+}
+
+.instruction {
+    font-style: italic;
+    color: var(--gray-dark);
+    margin-bottom: var(--spacing);
+}
+
+/* ========================================
+   DOCUMENTAÇÃO
+   ======================================== */
+.docs-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.endpoint-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--gray-medium);
+}
+
+.endpoint {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing);
+    padding: var(--spacing);
+    background-color: var(--gray-light);
+    border: var(--border);
+}
+
+.method {
+    padding: 0.25rem 0.5rem;
+    margin-right: var(--spacing);
+    font-weight: bold;
+    border: var(--border);
+}
+
+.method-get {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.method-post {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.path {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.code-block {
+    background-color: var(--black);
+    color: var(--white);
+    padding: var(--spacing);
+    margin: var(--spacing) 0;
+    overflow-x: auto;
+    border: var(--border);
+}
+
+.code-block pre {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* ========================================
+   GRID DE ESTATÍSTICAS
+   ======================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing);
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    border: var(--border);
+    padding: var(--spacing);
+    background-color: var(--gray-light);
+}
+
+.stat-card h2 {
+    margin-bottom: var(--spacing);
+    padding-bottom: 0.5rem;
+    border-bottom: var(--border);
+}
+
+/* ========================================
+   LEAFLET CUSTOMIZAÇÕES
+   ======================================== */
+.leaflet-popup-content-wrapper {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border: var(--border);
+    border-radius: 0;
+}
+
+.leaflet-popup-tip {
+    border: var(--border);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .control-panel {
+        max-height: none;
+    }
+
+    #map {
+        height: 400px;
+    }
+
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav {
+        margin-top: var(--spacing);
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '...';
+    animation: dots 1s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
