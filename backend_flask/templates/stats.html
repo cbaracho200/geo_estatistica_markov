@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Estatísticas - Sistema de Geoestatística{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="docs-container">
+        <h1>ESTATÍSTICAS DO SISTEMA</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h2>LOTES</h2>
+                <div class="stat-item">
+                    <span class="stat-label">Total:</span>
+                    <span class="stat-value" id="stat-lotes-total">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Com Geometria:</span>
+                    <span class="stat-value" id="stat-lotes-geom">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Bairros Únicos:</span>
+                    <span class="stat-value" id="stat-lotes-bairros">-</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <h2>IMÓVEIS</h2>
+                <div class="stat-item">
+                    <span class="stat-label">Total:</span>
+                    <span class="stat-value" id="stat-imoveis-total">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Com Geometria:</span>
+                    <span class="stat-value" id="stat-imoveis-geom">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Bairros Únicos:</span>
+                    <span class="stat-value" id="stat-imoveis-bairros">-</span>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="loadPageStats()" class="btn" style="margin-top: 2rem;">ATUALIZAR ESTATÍSTICAS</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function loadPageStats() {
+    try {
+        const response = await fetch('/stats');
+        const data = await response.json();
+
+        document.getElementById('stat-lotes-total').textContent = data.lotes.total || 0;
+        document.getElementById('stat-lotes-geom').textContent = data.lotes.com_geometria || 0;
+        document.getElementById('stat-lotes-bairros').textContent = data.lotes.bairros_unicos || 0;
+
+        document.getElementById('stat-imoveis-total').textContent = data.imoveis.total || 0;
+        document.getElementById('stat-imoveis-geom').textContent = data.imoveis.com_geometria || 0;
+        document.getElementById('stat-imoveis-bairros').textContent = data.imoveis.bairros_unicos || 0;
+    } catch (error) {
+        console.error('Erro ao carregar estatísticas:', error);
+    }
+}
+
+// Carregar automaticamente ao abrir a página
+window.addEventListener('load', loadPageStats);
+</script>
+{% endblock %}

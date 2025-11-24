@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Documentação da API - Sistema de Geoestatística{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="docs-container">
+        <h1>DOCUMENTAÇÃO DA API</h1>
+
+        <div class="endpoint-section">
+            <h2>Health Check</h2>
+
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <span class="path">/health</span>
+            </div>
+            <p>Verifica o status do servidor.</p>
+            <div class="code-block">
+<pre>curl http://localhost:8000/health</pre>
+            </div>
+            <p><strong>Resposta:</strong></p>
+            <div class="code-block">
+<pre>{
+  "status": "online",
+  "timestamp": "2024-01-15T10:30:00",
+  "version": "1.0.0"
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Upload de Lotes</h2>
+
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <span class="path">/upload/lotes</span>
+            </div>
+            <p>Faz upload de arquivo Parquet com dados de lotes.</p>
+            <div class="code-block">
+<pre>curl -X POST http://localhost:8000/upload/lotes \
+  -F "file=@lotes.parquet"</pre>
+            </div>
+            <p><strong>Resposta:</strong></p>
+            <div class="code-block">
+<pre>{
+  "message": "Lotes carregados com sucesso",
+  "records_count": 1500,
+  "file_type": "lotes",
+  "columns": ["codLote", "bairro", "area_terreno", ...]
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Upload de Imóveis</h2>
+
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <span class="path">/upload/imoveis</span>
+            </div>
+            <p>Faz upload de arquivo Parquet com dados de imóveis.</p>
+            <div class="code-block">
+<pre>curl -X POST http://localhost:8000/upload/imoveis \
+  -F "file=@imoveis.parquet"</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Estatísticas</h2>
+
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <span class="path">/stats</span>
+            </div>
+            <p>Retorna estatísticas gerais dos dados carregados.</p>
+            <div class="code-block">
+<pre>curl http://localhost:8000/stats</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Lotes GeoJSON</h2>
+
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <span class="path">/lotes/geojson</span>
+            </div>
+            <p>Retorna lotes em formato GeoJSON.</p>
+            <p><strong>Parâmetros:</strong></p>
+            <ul>
+                <li><code>bairro</code> (opcional): Filtrar por bairro</li>
+                <li><code>limit</code> (opcional): Limite de resultados (padrão: 1000)</li>
+            </ul>
+            <div class="code-block">
+<pre>curl "http://localhost:8000/lotes/geojson?bairro=Centro&limit=100"</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Imóveis GeoJSON</h2>
+
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <span class="path">/imoveis/geojson</span>
+            </div>
+            <p>Retorna imóveis em formato GeoJSON.</p>
+            <p><strong>Parâmetros:</strong></p>
+            <ul>
+                <li><code>bairro</code> (opcional): Filtrar por bairro</li>
+                <li><code>limit</code> (opcional): Limite de resultados (padrão: 1000)</li>
+            </ul>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Limites Geográficos</h2>
+
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <span class="path">/bounds</span>
+            </div>
+            <p>Retorna os limites geográficos dos dados carregados.</p>
+            <div class="code-block">
+<pre>curl http://localhost:8000/bounds</pre>
+            </div>
+            <p><strong>Resposta:</strong></p>
+            <div class="code-block">
+<pre>{
+  "bounds": {
+    "minLng": -40.35,
+    "minLat": -20.32,
+    "maxLng": -40.28,
+    "maxLat": -20.25
+  }
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Análise Espacial</h2>
+
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <span class="path">/analyze</span>
+            </div>
+            <p>Analisa uma área circular ao redor de um ponto.</p>
+            <div class="code-block">
+<pre>curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{
+    "latitude": -20.3155,
+    "longitude": -40.3128,
+    "radius_meters": 1000
+  }'</pre>
+            </div>
+            <p><strong>Body:</strong></p>
+            <div class="code-block">
+<pre>{
+  "latitude": -20.3155,
+  "longitude": -40.3128,
+  "radius_meters": 1000,
+  "filters": {}
+}</pre>
+            </div>
+            <p><strong>Resposta:</strong></p>
+            <div class="code-block">
+<pre>{
+  "point": {"latitude": -20.3155, "longitude": -40.3128},
+  "radius_meters": 1000,
+  "lotes_encontrados": 25,
+  "imoveis_encontrados": 8,
+  "estatisticas": {
+    "lotes": {
+      "area_media": 450.5,
+      "area_total": 11262.5
+    },
+    "imoveis": {
+      "preco_medio": 850000.0
+    }
+  }
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint-section">
+            <h2>Códigos de Status HTTP</h2>
+            <ul>
+                <li><code>200</code> - Sucesso</li>
+                <li><code>400</code> - Requisição inválida</li>
+                <li><code>404</code> - Rota não encontrada</li>
+                <li><code>500</code> - Erro interno do servidor</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
